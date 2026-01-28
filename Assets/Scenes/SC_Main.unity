@@ -295,6 +295,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1828865105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8731696083823566493, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
+  m_PrefabInstance: {fileID: 609301049739411499}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1828865109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828865105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35439e2d94f0204cbb6d593f80cf556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SC_Ball
 --- !u!1001 &609301049739411499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -303,13 +320,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3849430085779811708, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5710620289684344830, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5710620289684344830, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.96
       objectReference: {fileID: 0}
     - target: {fileID: 5710620289684344830, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
       propertyPath: m_LocalPosition.z
@@ -350,7 +371,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8731696083823566493, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1828865109}
   m_SourcePrefab: {fileID: 100100000, guid: 71c9623f8494f0a4ab8578fee1859c69, type: 3}
 --- !u!1001 &7519537917080179542
 PrefabInstance:
@@ -402,6 +426,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5898628519251781036, guid: 839851cbc0656df4594335cd46558a21, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6934206168968815483, guid: 839851cbc0656df4594335cd46558a21, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374611859681911722, guid: 839851cbc0656df4594335cd46558a21, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374611859681911722, guid: 839851cbc0656df4594335cd46558a21, type: 3}
+      propertyPath: m_GravityScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

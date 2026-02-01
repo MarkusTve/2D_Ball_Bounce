@@ -17,7 +17,7 @@ public class SC_Ball : MonoBehaviour
 
     public int HitAmount { get { return hitAmount; } }
 
-    private int speed = 100;
+    private int speed = 250;
 
     Rigidbody2D rigidBody = null;
 
@@ -39,7 +39,7 @@ public class SC_Ball : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
 
-        screenHeightInWorldUnits = Camera.main.orthographicSize * 2f;
+        screenHeightInWorldUnits = Camera.main.orthographicSize;
         screenWidthInWorldUnits = screenHeightInWorldUnits * Camera.main.aspect;
     }
 
@@ -68,12 +68,7 @@ public class SC_Ball : MonoBehaviour
 
         Debug.DrawLine(this.transform.position, mousePosition);
 
-
-        print(screenWidthInWorldUnits + "----");
-        print(screenHeightInWorldUnits);
-        Debug.DrawLine(new Vector2(screenWidthInWorldUnits, screenHeightInWorldUnits),new Vector2(0,0));
-
-        //OnBounceViewportBounds();
+        OnBounceViewportBounds();
     }
 
     private void OnBounceViewportBounds()
@@ -82,6 +77,19 @@ public class SC_Ball : MonoBehaviour
         {
            currentDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.left);
         }
+        else if (this.transform.position.x <= -screenWidthInWorldUnits)
+        {
+            currentDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.right);
+        }
+        else if (this.transform.position.y >= screenHeightInWorldUnits)
+        {
+            currentDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.down);
+        }
+        else if (this.transform.position.y <= -screenHeightInWorldUnits)
+        {
+            currentDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.up);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -103,11 +111,9 @@ public class SC_Ball : MonoBehaviour
         Vector2 roundedNormal = new Vector2(Mathf.RoundToInt(surfaceNormal.x), Mathf.RoundToInt(surfaceNormal.y));
         roundedNormal.Normalize();
 
-        // Change so that Vector2.down is a vector that chages depending on what side of the square was hit
         newDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, roundedNormal);
 
         currentDirection = newDirection;
-
     }
 
 }

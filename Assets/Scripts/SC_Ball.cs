@@ -5,55 +5,27 @@ using UnityEngine.InputSystem;
 
 public class SC_Ball : MonoBehaviour
 {
-    [SerializeField]
-    private InputActionAsset inputAsset;
-
-    private InputAction pointerClickInputAction;
-    private InputAction pointerMoveInputAction;
-
-    private int hitAmount = 1;
-
+  
     private bool shouldMove = false;
 
-    public int HitAmount { get { return hitAmount; } }
-
-    private int speed = 250;
+    private int speed = 350;
 
     Rigidbody2D rigidBody = null;
-
-    Collider2D collider = null;
-
-    Vector2 currentDirection = Vector2.zero;
-    Vector2 mousePosition = Vector2.zero;
 
     float screenHeightInWorldUnits = 0.0f;
     float screenWidthInWorldUnits = 0.0f;
 
+    private Vector2 currentDirection = Vector2.zero;
+
     private void Awake()
     {
-        pointerMoveInputAction = inputAsset.FindAction("Point");
-        pointerClickInputAction = inputAsset.FindAction("Click");
-
-        pointerClickInputAction.performed += OnPointerActionPerformed;
-
         rigidBody = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
 
         screenHeightInWorldUnits = Camera.main.orthographicSize;
         screenWidthInWorldUnits = screenHeightInWorldUnits * Camera.main.aspect;
     }
 
-    private void OnPointerActionPerformed(InputAction.CallbackContext context)
-    {
-        if (shouldMove)
-            return;
-
-        currentDirection = mousePosition - (Vector2)transform.position;
-        currentDirection.Normalize();
-
-        shouldMove = true;
-    }
-
+    
     private void FixedUpdate()
     {
         if (!shouldMove)
@@ -64,10 +36,6 @@ public class SC_Ball : MonoBehaviour
 
     private void Update()
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(pointerMoveInputAction.ReadValue<Vector2>());
-
-        Debug.DrawLine(this.transform.position, mousePosition);
-
         OnBounceViewportBounds();
     }
 
@@ -114,6 +82,13 @@ public class SC_Ball : MonoBehaviour
         newDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, roundedNormal);
 
         currentDirection = newDirection;
+    }
+
+    public void Launch( Vector2 newDirection, int newSpeed)
+    {
+        speed = newSpeed;
+        currentDirection = newDirection;
+        shouldMove = true;
     }
 
 }

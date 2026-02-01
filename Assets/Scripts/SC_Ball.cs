@@ -21,9 +21,13 @@ public class SC_Ball : MonoBehaviour
 
     Rigidbody2D rigidBody = null;
 
+    Collider2D collider = null;
+
     Vector2 currentDirection = Vector2.zero;
     Vector2 mousePosition = Vector2.zero;
 
+    float screenHeightInWorldUnits = 0.0f;
+    float screenWidthInWorldUnits = 0.0f;
 
     private void Awake()
     {
@@ -33,6 +37,10 @@ public class SC_Ball : MonoBehaviour
         pointerClickInputAction.performed += OnPointerActionPerformed;
 
         rigidBody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<Collider2D>();
+
+        screenHeightInWorldUnits = Camera.main.orthographicSize * 2f;
+        screenWidthInWorldUnits = screenHeightInWorldUnits * Camera.main.aspect;
     }
 
     private void OnPointerActionPerformed(InputAction.CallbackContext context)
@@ -59,6 +67,21 @@ public class SC_Ball : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(pointerMoveInputAction.ReadValue<Vector2>());
 
         Debug.DrawLine(this.transform.position, mousePosition);
+
+
+        print(screenWidthInWorldUnits + "----");
+        print(screenHeightInWorldUnits);
+        Debug.DrawLine(new Vector2(screenWidthInWorldUnits, screenHeightInWorldUnits),new Vector2(0,0));
+
+        //OnBounceViewportBounds();
+    }
+
+    private void OnBounceViewportBounds()
+    {
+        if (this.transform.position.x >= screenWidthInWorldUnits)
+        {
+           currentDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.left);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -77,12 +100,14 @@ public class SC_Ball : MonoBehaviour
 
         surfaceNormal = objectToBounceOff.ClosestPoint(this.transform.position) - (Vector2)objectToBounceOff.bounds.center;
 
-        surfaceNormal.Normalize();
+        Vector2 roundedNormal = new Vector2(Mathf.RoundToInt(surfaceNormal.x), Mathf.RoundToInt(surfaceNormal.y));
+        roundedNormal.Normalize();
 
         // Change so that Vector2.down is a vector that chages depending on what side of the square was hit
-        newDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.down);
+        newDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, roundedNormal);
 
         currentDirection = newDirection;
 
     }
+
 }

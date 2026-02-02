@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SCO_GameControls
   m_EditorClassIdentifier: Assembly-CSharp::SCO_GameControls
   ballHitAmount: 1
-  amountOfBalls: 1
+  amountOfBalls: 4
   ballSpeed: 350
   round: 1
+  launchRate: 0.6

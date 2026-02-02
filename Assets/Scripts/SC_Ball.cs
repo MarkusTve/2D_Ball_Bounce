@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class SC_Ball : MonoBehaviour
 {
-  
     private bool shouldMove = false;
 
     private int speed = 350;
@@ -25,7 +24,6 @@ public class SC_Ball : MonoBehaviour
         screenWidthInWorldUnits = screenHeightInWorldUnits * Camera.main.aspect;
     }
 
-    
     private void FixedUpdate()
     {
         if (!shouldMove)
@@ -55,7 +53,7 @@ public class SC_Ball : MonoBehaviour
         }
         else if (this.transform.position.y <= -screenHeightInWorldUnits)
         {
-            currentDirection = Vector2.Reflect(rigidBody.linearVelocity.normalized, Vector2.up);
+            Destroy(this.gameObject);
         }
 
     }

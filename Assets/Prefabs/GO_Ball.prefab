@@ -102,9 +102,10 @@ GameObject:
   - component: {fileID: 5710620289684344830}
   - component: {fileID: 5809122785326630002}
   - component: {fileID: 3849430085779811708}
+  - component: {fileID: 254999324720478257}
   m_Layer: 0
   m_Name: GO_Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,7 +141,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -188,3 +189,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &254999324720478257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731696083823566493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35439e2d94f0204cbb6d593f80cf556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SC_Ball

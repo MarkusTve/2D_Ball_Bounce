@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,14 +13,17 @@ public class SC_BallLauncher : MonoBehaviour
 
     [SerializeField]
     private InputActionAsset inputAsset;
+
     private InputAction pointerClickInputAction;
     private InputAction pointerMoveInputAction;
 
-    Vector2 ballDirection = Vector2.zero;
-    Vector2 mousePosition = Vector2.zero;
+    private Vector2 ballDirection = Vector2.zero;
+    private Vector2 mousePosition = Vector2.zero;
 
-    private bool shouldMove = false;
+    private float launchRateTimer = 0.0f;
 
+    private bool isLaunching = false;
+    private int launchCount = 0;
 
     private void Awake()
     {
@@ -33,34 +37,41 @@ public class SC_BallLauncher : MonoBehaviour
     {
         mousePosition = Camera.main.ScreenToWorldPoint(pointerMoveInputAction.ReadValue<Vector2>());
 
-        Debug.DrawLine(this.transform.position, mousePosition);
+        if (!isLaunching)
+            return;
+
+        OnLaunchBall();
+    }
+
+    private void OnLaunchBall()
+    {
+        if (launchCount >= gameControls.amountOfBalls)
+        {
+            isLaunching = false;
+            return;
+        }
+
+        launchRateTimer += Time.deltaTime;
+
+        if (launchRateTimer <= gameControls.launchRate)
+            return;
+
+        GameObject newBall = Instantiate(ballPrefab, new Vector3(0, -4, 0), Quaternion.identity);
+        newBall.GetComponent<SC_Ball>().Launch(ballDirection, gameControls.ballSpeed);
+
+        launchCount++;
+        launchRateTimer = 0.0f;
     }
 
     private void OnPointerActionPerformed(InputAction.CallbackContext context)
     {
-        if (shouldMove)
-            return;
-
-        StartCoroutine(IInstanciateBalls());
-
-        ballDirection = mousePosition - (Vector2)transform.position;
-        ballDirection.Normalize();
-
-        shouldMove = true;
+        SetBallTrajectory((mousePosition - new Vector2(0, -4)).normalized);
+        isLaunching = true;
     }
-    IEnumerator IInstanciateBalls()
+
+    private void SetBallTrajectory(Vector2 newTrajectory)
     {
-        for (int i = 0; i < gameControls.amountOfBalls; i++)
-        {
-            GameObject ball =
-            Instantiate(ballPrefab, new Vector3(0, -4, 0), Quaternion.identity);
-
-            ball.GetComponent<SC_Ball>().Launch(ballDirection, gameControls.ballSpeed);
-
-
-            yield return new WaitForSeconds(.6f);   
-        }
+        ballDirection = newTrajectory;
     }
-
 
 }

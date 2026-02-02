@@ -28,8 +28,12 @@ public class SC_Box : MonoBehaviour
         if (!other.gameObject.CompareTag("Ball"))
             return;
 
-        hitAmount--;    // 
+        hitAmount--;
+
         UpdateText(hitAmount.ToString());
+
+        if (hitAmount <= 0)
+            Destroy(this.gameObject);
     }
 
     private void UpdateText(string newText)

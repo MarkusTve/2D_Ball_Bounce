@@ -12,40 +12,39 @@ public class SC_BoxSpawner : MonoBehaviour
     float screenHeightInWorldUnits = 0.0f;
     float screenWidthInWorldUnits = 0.0f;
 
-    Vector2[] boxPositions = new Vector2[100];
 
     void Awake()
     {
         screenHeightInWorldUnits = Camera.main.orthographicSize;
         screenWidthInWorldUnits = screenHeightInWorldUnits * Camera.main.aspect;
 
+
+    }
+
+    private void Start()
+    {
         OnCreateBoxPositions();
-        OnSpawnRowOfBoxes();    
+        OnSpawnRowOfBoxes();
     }
 
     private void OnSpawnRowOfBoxes()
     {
-        foreach (var position in boxPositions) 
+        for (int i = 0; i < gameControls.columns * gameControls.rows; i++)
         {
-            Instantiate(boxPrefab, position, Quaternion.identity);
+            Instantiate(boxPrefab, new Vector3((-screenWidthInWorldUnits + 1) + (screenWidthInWorldUnits / (gameControls.columns) * (i % gameControls.columns)), (screenHeightInWorldUnits - 1)+ (-1.2f * (i / gameControls.columns)), 0), Quaternion.identity);
         }
     }
 
     private void OnCreateBoxPositions()
     {
-        for (int x = 0; x < gameControls.columns; x++)
-        {
-            for (int y = 0; y < gameControls.rows; y++) 
-            {
-                boxPositions.SetValue(new Vector2(x, y), x);
-            }
-        }
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 

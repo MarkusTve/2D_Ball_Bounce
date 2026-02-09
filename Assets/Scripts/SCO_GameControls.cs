@@ -5,6 +5,8 @@ public class SCO_GameControls : ScriptableObject
 {
     public int ballHitAmount = 1;
 
+    public int boxHitAmount = 3;
+
     public int amountOfBalls = 1;
 
     public int ballSpeed = 350;
@@ -18,4 +20,13 @@ public class SCO_GameControls : ScriptableObject
     public int rows = 10;
 
     public float spacing = 1.2f; 
+
+
+    public int OnIncrementRound() 
+    {
+        round--;
+        return round;
+    }
+
+
 }

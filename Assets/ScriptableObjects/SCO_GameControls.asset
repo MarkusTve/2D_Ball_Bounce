@@ -17,6 +17,6 @@ MonoBehaviour:
   ballSpeed: 350
   round: 1
   launchRate: 0.6
-  columns: 10
-  rows: 2
+  columns: 14
+  rows: 1
   spacing: 1.2

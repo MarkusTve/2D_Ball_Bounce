@@ -12,18 +12,14 @@ public class SC_BoxSpawner : MonoBehaviour
     float screenHeightInWorldUnits = 0.0f;
     float screenWidthInWorldUnits = 0.0f;
 
-
     void Awake()
     {
         screenHeightInWorldUnits = Camera.main.orthographicSize;
         screenWidthInWorldUnits = screenHeightInWorldUnits * Camera.main.aspect;
-
-
     }
 
     private void Start()
     {
-        OnCreateBoxPositions();
         OnSpawnRowOfBoxes();
     }
 
@@ -31,21 +27,16 @@ public class SC_BoxSpawner : MonoBehaviour
     {
         for (int i = 0; i < gameControls.columns * gameControls.rows; i++)
         {
-            Instantiate(boxPrefab, new Vector3((-screenWidthInWorldUnits + 1) + (screenWidthInWorldUnits / (gameControls.columns) * (i % gameControls.columns)), (screenHeightInWorldUnits - 1)+ (-1.2f * (i / gameControls.columns)), 0), Quaternion.identity);
+            if (OnGetRandomSeed(1, 6) < 2)
+                return;
+
+            GameObject newBox = Instantiate(boxPrefab, new Vector3((-screenWidthInWorldUnits + 1) + (gameControls.spacing * (i % gameControls.columns)), (screenHeightInWorldUnits - 1) + (-gameControls.spacing * (i / gameControls.columns)), 0), Quaternion.identity);
+            newBox.GetComponent<SC_Box>().HitAmount = gameControls.boxHitAmount;
         }
     }
 
-    private void OnCreateBoxPositions()
+    private int OnGetRandomSeed(int minRange, int maxRange)
     {
-
-
+        return UnityEngine.Random.Range(minRange, maxRange);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
 }
